@@ -70,6 +70,23 @@ class Login extends Component {
       });
   };
 
+  onGuestLoginPress = () => {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then((result) => {
+        this.setupUserDetails(result);
+        console.log(result);
+        console.log("User logged-in successfully!");
+      })
+      .catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+  };
+
   setupUserDetails = async (result) => {
     let user = result.user;
     if (user) {
@@ -192,6 +209,15 @@ class Login extends Component {
             <div className="col-sm-3"></div>
           </div>
         </div>
+
+        <button
+          className="btnGuestLogin"
+          type="submit"
+          onClick={this.onGuestLoginPress}
+        >
+          Guest User login
+        </button>
+        <h3>--OR--</h3>
 
         <button className="btnLogin" type="submit" onClick={this.onLoginPress}>
           SIGN IN WITH GOOGLE
